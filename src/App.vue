@@ -5,10 +5,7 @@
     <button @click="decrement"></button>
     <br>
     {{todos}}
-
-    <!--<ul v-for="todo in todos">{{todo.name}}</ul>-->
     <hr>
-    <!--<ul v-for="todo in bla">{{todo.name}}</ul>-->
     <button @click="showDoneTodo"></button>
     <router-view/>
   </div>
@@ -36,9 +33,6 @@
         return this.$store.getters.doneTodo;
       }
     }
-    /*count() {
-      return this.$store.state.count;
-    },*/
     ,
     methods: {
       increment() {
