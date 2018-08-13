@@ -11,7 +11,7 @@
     <hr>
     <ul>
       <li v-for="(user, index) in infoUser" :key="index">
-        {{user.name.first}} -  {{user.cell}}
+        {{user.userId}} -  {{user.title}}
       </li>
     </ul>
     <button @click="getUser"></button>
@@ -24,7 +24,7 @@
 <script>
 
   import {mapState} from 'vuex';
-  import $ from "jquery";
+  /*import $ from "jquery";*/
   import axios from 'axios';
 
   export default {
@@ -36,7 +36,7 @@
           age: 25
         },
         users: [],
-        infoUser: null
+        infoUser: []
       }
     },
     computed: {
@@ -70,15 +70,25 @@
             self.infoUser = data.results;
             console.log(this.infoUser)
           }
-        });*/
+        });
 
-       axios.get('https://randomuser.me/api/', {
-         params: {
+        'https://randomuser.me/api/'
+        params: {
            results: 5,
            gender: 'female'
-         }
-       })
-         .then(response => this.infoUser = response.data.results)
+         }*/
+
+
+      /* axios.get('http://jsonplaceholder.typicode.com/posts', {
+        params: {
+          results: 10
+        }
+       }).then(response => this.infoUser = response.data)*/
+
+
+
+      
+
       }
     }
   }
