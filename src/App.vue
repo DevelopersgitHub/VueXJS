@@ -5,6 +5,7 @@
     <button @click="decrement"></button>
     <br>
     {{todos}}
+
     <hr>
     <button @click="showDoneTodo"></button>
     <router-view/>
