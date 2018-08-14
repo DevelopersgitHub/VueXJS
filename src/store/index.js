@@ -19,10 +19,10 @@ const mutations = {
 };
 
 const getters = {
-  /*doneTodo:
+  doneTodo:
     state => {
       return state.todos.filter(todo => todo.done).length
-    }*/
+    }
 };
 
 export default new Vuex.Store({

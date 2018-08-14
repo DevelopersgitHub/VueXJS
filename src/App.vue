@@ -8,14 +8,31 @@
     <button @click="showDoneTodo"></button>-->
 
 
+    <!--    <hr>
+        <ul>
+          <li v-for="(user, index) in infoUser" :key="index">
+            {{user.userId}} - {{user.title}}
+          </li>
+        </ul>-->
+    <button @click="getUser">Load data</button>
     <hr>
-    <ul>
-      <li v-for="(user, index) in infoUser" :key="index">
-        {{user.userId}} -  {{user.title}}
-      </li>
-    </ul>
-    <button @click="getUser"></button>
+    <input type="text" v-model="noteList.body" placeholder="Body">
+    <input type="text" v-model="noteList.title" placeholder="title">
+    <input type="number" v-model="noteList.userId" placeholder="userID">
+    <button @click="requestPost">Change data</button>
+    <!--  <button @click="getOnceUser">Get once user</button>
+    <button @click="show =! show"></button>
+      <transition name="fade">
+        <p v-if="show">Hello, Vue.js</p>
+      </transition>
+  -->
+
+
+    <li v-for="(user, index) in infoUser" :key="index">
+      {{index}} - {{user.userId}} - {{user.title}}
+    </li>
     <hr>
+
 
     <router-view/>
   </div>
@@ -26,6 +43,7 @@
   import {mapState} from 'vuex';
   /*import $ from "jquery";*/
   import axios from 'axios';
+  import {HTTP} from './util/index.js';
 
   export default {
     name: 'App',
@@ -36,7 +54,14 @@
           age: 25
         },
         users: [],
-        infoUser: []
+        infoUser: [],
+        noteList:
+          {
+            body: '',
+            title: '',
+            userId: 1,
+          },
+        show: true
       }
     },
     computed: {
@@ -62,36 +87,35 @@
         this.$store.commit('showDoneTodo', this.payload.age);
       },
       getUser() {
-       /* let self = this
-        $.ajax({
-          url: 'https://randomuser.me/api/',
-          dataType: 'json',
-          success(data) {
-            self.infoUser = data.results;
-            console.log(this.infoUser)
-          }
-        });
+        /* let self = this
+         $.ajax({
+           url: 'https://randomuser.me/api/',
+           dataType: 'json',
+           success(data) {
+             self.infoUser = data.results;
+             console.log(this.infoUser)
+           }
+         });
 
-        'https://randomuser.me/api/'
-        params: {
-           results: 5,
-           gender: 'female'
-         }*/
+         'https://randomuser.me/api/'
+         params: {
+            results: 5,
+            gender: 'female'
+          }*/
 
+        HTTP.get('posts', {}).then(response => this.infoUser = response.data)
 
-      /* axios.get('http://jsonplaceholder.typicode.com/posts', {
-        params: {
-          results: 10
-        }
-       }).then(response => this.infoUser = response.data)*/
-
-
-
-      
-
+      },
+      requestPost() {
+        HTTP.post('posts', this.noteList)
+          .then(res => this.infoUser.push(this.noteList));
+        /*getOnceUser() {
+        this.infoUser.filter(user => user.userId === 101)
+      }*/
       }
     }
   }
+
 </script>
 
 <style>
@@ -102,5 +126,13 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+  }
+
+  .fade-enter-active, .fade-leave.active {
+    transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
   }
 </style>
