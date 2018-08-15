@@ -4,9 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import filterApp from './filters/AppFilter'
+import BootstrapVue from 'bootstrap-vue'
+
+Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
-
 
 Vue.component('input-one', {
   data() {
@@ -38,6 +41,18 @@ Vue.component('input-two', {
   },
   template: '<div><input type="number" v-model.number="numberTwo"/></div>'
 });
+
+/*
+
+
+Vue.filter('filterApp',
+  (value) => {
+    value = parseFloat(value);
+    return value.toFixed(2)
+  });
+*/
+
+
 
 Vue.component('result', {
   data() {
@@ -74,6 +89,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  // filters: {filterApp},
   components: {App},
   template: '<App/>'
 })

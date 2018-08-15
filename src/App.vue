@@ -1,53 +1,28 @@
 <template>
   <div id="app">
-    <!--<h1>{{count}}</h1>
-    <button @click="increment"></button>
-    <button @click="decrement"></button>
-    <br>
-    {{todos}}
-    <button @click="showDoneTodo"></button>
     <hr>
-    <ul>
-      <li v-for="(user, index) in infoUser" :key="index">
-        {{user.userId}} - {{user.title}}
-      </li>
-    </ul>
-    <button @click="getUser">Load data</button>
-    <hr>
-    <input type="text" v-model="noteList.body" placeholder="Body">
-    <input type="text" v-model="noteList.title" placeholder="title">
-    <input type="number" v-model="noteList.userId" placeholder="userID">
-    <button @click="requestPost">Change data</button>
-    <button @click="getOnceUser">Get once user</button>
-    <button @click="show =! show"></button>
-      <transition name="fade">
-        <p v-if="show">Hello, Vue.js</p>
-      </transition>
-    <li v-for="(user, index) in infoUser" :key="index">
-      {{index}} - {{user.userId}} - {{user.title}}
-    </li>
-    <hr>
-
-
-    <div>
-      <input-one/>
-      <input-two/>
-        <result/>
-    </div>-->
-
-
-    <hr>
-    <input type="text" v-model="randomName" placeholder="Add data about yourself"/>
+    <!--<input type="text" v-model="randomName" placeholder="Add data about yourself"/>
     <input type="text" v-model="randomValue" placeholder="Value"/>
     <input v-model="s_type" placeholder="Add your s_type"/>
     <button @click="OnClick(randomName, randomValue, s_type)">+</button>
     <p>{{dataUser.last_name}}</p>
+    <hr>
+    &lt;!&ndash;<input v-model="s_type" placeholder="Add s_type"/>&ndash;&gt;
+    <input v-model="s_type" placeholder="Add s_type"/>
+    <button type="button" @click="cc">add</button>-->
 
+
+    <!--  <ul>
+          <li v-for="(user, index) in infoUser" :key="index">
+            {{user.userId}} - {{user.title}}
+          </li>
+        </ul>
+        <button @click="getUser">Load data</button>-->
 
     <hr>
-    <!--<input v-model="s_type" placeholder="Add s_type"/>-->
-    <input v-model="s_type" placeholder="Add s_type"/>
-    <button type="button" @click="cc">add</button>
+    <button class="btn btn-danger">jhvghk</button>
+    <input type="number" v-model="number"/>
+    <p  v-if="number!=='0'" class="animated" :class="{tada: boolTada}">{{theNumber}}</p>
     <hr>
 
     <router-view/>
@@ -55,18 +30,23 @@
 </template>
 
 <script>
-  let f = 324234234;
   import {mapState} from 'vuex';
   /*import $ from "jquery";*/
   import axios from 'axios';
   import {HTTP} from './util/index.js';
+  import {generalData} from './mixins/main_mixins';
+  // import {filterApp} from "./filters/AppFilter";
 
   export default {
     name: 'App',
+    mixins: [generalData],
+    /*   filters: [filterApp],*/
     data() {
       return {
+        number: '0',
         randomName: '',
         randomValue: '',
+        myOptions: 'Hello',
         s_type: '',
         dataUser: {
           id: 10,
@@ -87,19 +67,27 @@
             title: '',
             userId: 1,
           },
-        show: true
+        show: true,
+        boolTada: false
       }
     },
     watch: {
-     /* 'dataUser.name'(n){
-        console.log(n, 'name')
+      /* 'dataUser.name'(n){
+         console.log(n, 'name')
+       },
+       setTimeout(() => {
+              this.bool = true;
+            }, 1000);*/
+      /*else {
+            alert('Add correct s_type!');
+          }*/
+      boolTada(value) {
+        if(value){
+          setTimeout(() => {
+            this.boolTada = false;
+          }, 1000);
+        }
       },
-      setTimeout(() => {
-             this.bool = true;
-           }, 1000);*/
-    /*else {
-          alert('Add correct s_type!');
-        }*/
       'dataUser.sex'(value) {
         console.log(value)
         if (value.trim().toLowerCase() === 'male') {
@@ -110,6 +98,10 @@
       }
     },
     computed: {
+      theNumber() {
+        this.boolTada = true;
+        return this.number;
+      },
       ...mapState({
         count: 'count',
         todos: 'todos'
@@ -119,7 +111,7 @@
       }
     },
     methods: {
-      cc(){
+      cc() {
         this.$set(this.dataUser, 'sex', this.s_type);
         // console.log(this.dataUser)
       },
@@ -160,11 +152,9 @@
             gender: 'female'
           }*/
 
-        HTTP.get('posts', {}).then(response => this.infoUser = response.data)
-
       },
-      requestPost() {
-        HTTP.post('posts', this.noteList)
+      async requestPost() {
+        await HTTP.post('posts', this.noteList)
           .then(res => this.infoUser.push(this.noteList));
         /*getOnceUser() {
         this.infoUser.filter(user => user.userId === 101)
@@ -184,6 +174,9 @@
 </script>
 
 <style>
+  @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+  @import "../node_modules/animate.css/animate.min.css";
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -193,13 +186,13 @@
     margin-top: 60px;
   }
 
-  /*.fade-enter-active, .fade-leave.active {
+  .fade-enter-active, .fade-leave.active {
     transition: opacity .5s;
   }
 
   .fade-enter, .fade-leave-to {
     opacity: 0;
-  }*/
+  }
 
   input[type = number] {
     width: 100px;
