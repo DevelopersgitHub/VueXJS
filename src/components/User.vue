@@ -1,23 +1,34 @@
 <template>
-  <div id="user" :style="{ 'background-color':  color }">
-    <h2>{{ $route.params.id }} - {{ $route.params.color }}</h2>
-    <button @click="bb"> >></button>
-    <button @click="cc"> ome </button>
+  <div>
+    <p>Info for user: {{$route.params.userID}}</p>
+    <button type="button"></button>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
   export default {
-    name: "User",
     data() {
       return {
-        color: ''
+        color: '',
+        users: [
+          {
+            userID: 1,
+            fullName: 'Mihail Mikhailov',
+            status: 'junior'
+          },
+          {
+            userID: 2,
+            fullName: 'Vladislav Guschin',
+            status: 'middle'
+          }
+        ]
       }
     },
     methods: {
       bb() {
         console.log()
-        this.$router.push('/home/user/10/color/red')
+        this.$router.push('/user/10')
       }   ,   cc() {
         console.log()
         this.$router.push('/home')
@@ -29,29 +40,30 @@
         return this.color;
       }*/
     },
-    beforeRouteEnter: (to, from, next) => {
-      next(vm => {
-        vm.color = to.params.color
-      });
-    },
-    beforeRouteUpdate: (to, from, next) => {
-      const answer = window.confirm("Yes/No");
-      console.log('fssdfsdf')
-      if (answer) {
-        next();
-      } else {
-        next(false);
-      }
-    },
-    beforeRouteLeave: (to, from, next) => {
-      const answer = window.confirm("Yes/No");
-      console.log('fssdfsdf')
-      if (answer) {
-        next();
-      } else {
-        next(false);
-      }
-    }
+  //   beforeRouteEnter: (to, from, next) => {
+  //     next(vm => {
+  //       // console.warn(vm.$route.params)
+  //       // vm.color = to.params.color
+  //     });
+  //   },
+  //   beforeRouteUpdate: (to, from, next) => {
+  //     const answer = window.confirm("Yes/No");
+  //     console.log('fssdfsdf')
+  //     if (answer) {
+  //       next();
+  //     } else {
+  //       next(false);
+  //     }
+  //   },
+  //   beforeRouteLeave: (to, from, next) => {
+  //     const answer = window.confirm("Yes/No");
+  //     console.log('fssdfsdf')
+  //     if (answer) {
+  //       next();
+  //     } else {
+  //       next(false);
+  //     }
+  //   }
   }
 </script>
 

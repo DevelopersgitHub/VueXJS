@@ -2,12 +2,15 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import { router } from './router'
 import store from './store'
 import filterApp from './filters/AppFilter'
-import BootstrapVue from 'bootstrap-vue'
+import BootstrapVue from 'bootstrap-vue';
+// import VueLocalStorage from 'vue-localstorage';
 
 Vue.use(BootstrapVue)
+
+// Vue.use(VueLocalStorage)
 
 Vue.config.productionTip = false
 
@@ -43,8 +46,6 @@ Vue.component('input-two', {
 });
 
 /*
-
-
 Vue.filter('filterApp',
   (value) => {
     value = parseFloat(value);
@@ -89,6 +90,13 @@ new Vue({
   el: '#app',
   router,
   store,
+  // localStorage: {
+  //   paths: [
+  //     {
+  //       type: Object
+  //     }
+  //   ]
+  // },
   // filters: {filterApp},
   components: {App},
   template: '<App/>'
