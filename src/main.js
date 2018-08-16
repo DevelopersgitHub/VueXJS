@@ -7,8 +7,12 @@ import store from './store'
 import filterApp from './filters/AppFilter'
 import BootstrapVue from 'bootstrap-vue';
 // import VueLocalStorage from 'vue-localstorage';
+import VueI18n from 'vue-i18n';
 
 Vue.use(BootstrapVue)
+
+Vue.use(VueI18n)
+
 
 // Vue.use(VueLocalStorage)
 
@@ -85,8 +89,32 @@ Vue.component('result', {
 })
 
 
+
+
+const messages = {
+  en: {
+    message: {
+      hello: 'hello world'
+    }
+  },
+  ja: {
+    message: {
+      hello: 'こんにちは、世界'
+    }
+  }
+}
+
+export const i18n = new VueI18n({
+  locale: 'ja',
+  messages
+})
+
+
+
+
 /* eslint-disable no-new */
 new Vue({
+  i18n,
   el: '#app',
   router,
   store,

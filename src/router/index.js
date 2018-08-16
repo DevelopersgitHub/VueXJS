@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import App from '@/App'
-import User from '@/components/User'
-import UserPath from '../components/UserPath'
-// import HelloWorld from '@/components/HelloWorld'
+import User from '../components/User'
 
 Vue.use(Router)
 
@@ -11,15 +8,17 @@ export const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: App,
-    },
-    {
+      path: '/user/:name',
+      name: 'user',
+      component: User,
+    }
+  ],
+});
+    /*{
       path: '/user/:userID',
       name: 'user',
       component: User,
-      /*beforeUpdate: (to ,from, next) => {
+      /!*beforeUpdate: (to ,from, next) => {
         // if(to.params.userID) {
           console.log(to, 'fsdsdffdssfd')
           console.log(from, 'fsdsdffdssfd')
@@ -31,7 +30,7 @@ export const router = new Router({
         console.log(to, from)
         localStorage.setItem('paths', to.fullPath)
         next()
-      },*/
+      },*!/
       children: [
         {
           path: 'next',
@@ -42,7 +41,7 @@ export const router = new Router({
       ],
     },
 
-    /* {
+    /!* {
        path: '/home/user/:id/color/:color',
        name: 'User',
        component: User,
@@ -56,7 +55,7 @@ export const router = new Router({
        path: '/home/user/hello',
        name: 'HelloWorld',
        component: HelloWorld
-     }*/
+     }*!/
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -68,7 +67,8 @@ export const router = new Router({
       }
     }
   },
-});
+});*/
+/*
 
 router.afterEach((to, from) => {
   let arr = JSON.parse(localStorage.getItem('paths'))
@@ -96,3 +96,4 @@ router.beforeEach((to, from, next) => {
     next();
   }
 })
+*/

@@ -1,71 +1,53 @@
 <template>
-  <animation name="fade">
-    <div>
-      p>Info for user: {{$route.params.userID}}</p>
-      <button type="button">Once</button>
-      <router-view></router-view>
-    </div>
-  </animation>
+  <div id="user">
+    <p v-model="locale">{{ $t("message.hello") }}</p>
+    <button @click="onClick"></button>
+  </div>
 </template>
 
 <script>
   export default {
     data() {
       return {
-        color: '',
+        locale: '',
         users: [
           {
-            userID: 1,
-            fullName: 'Mihail Mikhailov',
-            status: 'junior'
+            id: 1,
+            name: 'Vlad',
+            locale: 'ja'
           },
           {
-            userID: 2,
-            fullName: 'Vladislav Guschin',
-            status: 'middle'
+            id: 2,
+            name: 'Mikhail',
+            locale: 'en'
           }
         ]
       }
     },
-    methods: {
-      bb() {
-        console.log()
-        this.$router.push('/user/10')
-      }, cc() {
-        console.log()
-        this.$router.push('/home')
+    watch: {
+      '$route'(to, from) {
+        this.locale = to.params;
+        if (this.locale === 'vlad') {
+          this.$i18n.locale = this.users.filter(el => el.id === 1).locale;
+        } else {
+          this.$i18n.locale = this.users[1].locale;
+        }
       }
     },
-    computed: {
-      /*colorBack(value) {
-        this.color = value;
-        return this.color;
-      }*/
-    },
-    //   beforeRouteEnter: (to, from, next) => {
-    //     next(vm => {
-    //       // console.warn(vm.$route.params)
-    //       // vm.color = to.params.color
-    //     });
-    //   },
-    //   beforeRouteUpdate: (to, from, next) => {
-    //     const answer = window.confirm("Yes/No");
-    //     console.log('fssdfsdf')
-    //     if (answer) {
-    //       next();
-    //     } else {
-    //       next(false);
-    //     }
-    //   },
-    //   beforeRouteLeave: (to, from, next) => {
-    //     const answer = window.confirm("Yes/No");
-    //     console.log('fssdfsdf')
-    //     if (answer) {
-    //       next();
-    //     } else {
-    //       next(false);
-    //     }
-    //   }
+   /* beforeRouteUpdate (to, from, next) {
+      this.locale = to.params;
+      if (this.locale === 'vlad') {
+        this.$i18n.locale = 'ja';
+      } else {
+        this.$i18n.locale = 'en';
+      }
+      next()
+    },*/
+    methods: {
+      onClick() {
+        this.$router.push('/user/mihail');
+      }
+    }
   }
 </script>
 
