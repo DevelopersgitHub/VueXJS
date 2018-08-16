@@ -5,6 +5,7 @@
     <router-view></router-view>
     <button @click="cur='10'">10</button>
     <button @click="cur='12'">12</button>
+    <button @click="cc">GO</button>
   </div>
 </template>
 
@@ -12,7 +13,6 @@
 <script>
 
   import User from './components/User';
-
   export default {
     name: 'App',
     components: {User},
@@ -41,13 +41,30 @@
        next()
      },*/
     methods: {
+      cc() {
+        this.$router.push('/home/user/12')
+      },
       getAllInfo() {
         let userInfo = JSON.parse(localStorage.getItem('paths'));
         console.log(userInfo);
         this.userID = userInfo[1].id;
         this.fullPath = userInfo[1].path;
+      },
+      res(){
+        console.log('resizer')
+      },
+      onLoadPage(e) {
+          const answer = window.confirm('Y');
+          if(answer) {
+            this.$router.push('/home')
+          }
+          return answer;
       }
-    }
+    },
+    created(){
+      window.addEventListener('popstate', this.onLoadPage, false)
+     /* window.addEventListener('resize', this.res, false)*/
+  }
   }
 
 </script>
