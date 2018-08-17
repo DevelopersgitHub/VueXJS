@@ -1,11 +1,33 @@
 <template>
   <div id="app">
-     <!-- <input v-model="docState"/>-->
-      <p>{{docState}}</p>
-    <transition name="fade" mode="out-in">
-      <button :key="docState">{{buttonMessage}}</button>
-    </transition>
+    <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+      <div class="flipper">
+        <div class="front">
+          <img src="./assets/fone.jpg"/>
+        </div>
+        <div class="back">
+          <img src="./assets/logo.png"/>
+        </div>
+      </div>
+    </div>
+    <!-- <input v-model="docState"/>
+     <p>{{docState}}</p>
+   <transition name="fade" mode="out-in">
+     <button class="animated slide-down":key="docState">{{buttonMessage}}</button>
+   </transition>-->
+    <button @click="add">Add</button>
+    <button @click="remove">Remove</button>
+    <button @click="shuffle">Перемешать</button>
+    <transition-group name="list-complete" tag="p">
+      <span
+        v-for="(item, index) in items"
+        :key="item"
+        class="list-complete-item">
+         {{item}}
+      </span>
+    </transition-group>
     <hr>
+
     <!--<button @click="show = !show">
       Переключить
     </button>
@@ -40,20 +62,20 @@
       <p v-if="show">привет</p>
     </transition>-->
 
-
-    <button @click="show = !show">Go</button>
-    <div class="animated zoomInDown">
-      <button
-        class="animated"
-        v-for="tab in tabs"
-        :key=tab.name
-        :class="{ 'tab-button' : currentTab.name === tab.name, rotateIn: currentTab.name === tab.name }"
-        @click="currentTab = tab"
-      >{{tab.name}}
-      </button>
-      <component :is="currentTab.component"
-                 class="tab"></component>
-    </div>
+    <!--
+        <button @click="show = !show">Go</button>
+        <div class="animated zoomInDown">
+          <button
+            class="animated"
+            v-for="tab in tabs"
+            :key=tab.name
+            :class="{ 'tab-button' : currentTab.name === tab.name, rotateIn: currentTab.name === tab.name }"
+            @click="currentTab = tab"
+          >{{tab.name}}
+          </button>
+          <component :is="currentTab.component"
+                     class="tab"></component>
+        </div>-->
     <router-view></router-view>
   </div>
 </template>
@@ -91,7 +113,9 @@
         tabs: tabs,
         currentTab: tabs[0],
         show: false,
-        docState: ''
+        docState: '',
+        items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        nextItem: 10
       }
     },
     computed: {
@@ -123,6 +147,18 @@
           translateX: '30px',
           opacity: 0
         }, {complete: done})
+      },
+      randomIndex() {
+        return Math.floor(Math.random() * this.items.length)
+      },
+      add() {
+        this.items.splice(this.randomIndex(), 0, this.nextItem++)
+      },
+      remove() {
+        this.items.splice(this.randomIndex(), 1)
+      },
+      shuffle() {
+        this.items = _.shuffle(this.items)
       }
     }
 
@@ -192,37 +228,121 @@
     opacity: 0;
   }
 
-  .slide-fade-enter-active {
-    transition: all .3s ease;
+  /*
+    .slide-fade-enter-active {
+      transition: all .3s ease;
+    }
+
+    .slide-fade-leave-active {
+      transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+
+    .slide-fade-enter, .slide-fade-leave-to {
+      transform: translateX(10px);
+      opacity: 0;
+    }
+
+    .bounce-enter-active {
+      animation: bounce-in .5s;
+    }
+
+    .bounce-leave-active {
+      animation: bounce-in .5s reverse;
+    }
+    .flip-list-move {
+      transition: transform 1s;
+    }
+    @keyframes bounce-in {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .list-item {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .list-enter-active, .list-leave-active {
+      transition: all 1s;
+    }
+
+    .list-enter, .list-leave-to !* .list-leave-active до версии 2.1.8 *!
+    {
+      opacity: 0;
+      transform: translateY(30px);
+    }*/
+
+  .list-complete-item {
+    transition: all 1s;
+    display: inline-block;
+    margin-right: 10px;
   }
 
-  .slide-fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  }
-
-  .slide-fade-enter, .slide-fade-leave-to {
-    transform: translateX(10px);
+  .list-complete-enter, .list-complete-leave-to {
     opacity: 0;
+    transform: translateY(30px);
   }
 
-  .bounce-enter-active {
-    animation: bounce-in .5s;
+  .list-complete-leave-active {
+    position: absolute;
   }
 
-  .bounce-leave-active {
-    animation: bounce-in .5s reverse;
+
+  .flip-container {
+    perspective: 1000px;
   }
 
-  @keyframes bounce-in {
-    0% {
-      transform: scale(0);
-    }
-    50% {
-      transform: scale(1.5);
-    }
-    100% {
-      transform: scale(1);
-    }
+  .flip-container:hover .flipper, .flip-container.hover .flipper {
+    transform: rotateY(180deg);
   }
+
+  .flip-container, .front, .back {
+    width: 320px;
+    height: 480px;
+  }
+  .flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+    position: relative;
+  }
+  .front, .back {
+    backface-visibility: hidden;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .front {
+    z-index: 2;
+  }
+  .back {
+    transform: rotateY(180deg);
+  }
+
+
+/*
+  .vertical.flip-container {
+    position: relative;
+  }
+
+  .vertical .back {
+    transform: rotateX(180deg);
+  }
+
+  .vertical.flip-container .flipper {
+    transform-origin: 100% 213.5px; !* half of height *!
+  }
+
+  .vertical.flip-container:hover .flipper {
+    transform: rotateX(-180deg);
+  }*/
 
 </style>

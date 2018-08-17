@@ -109,7 +109,7 @@ export const i18n = new VueI18n({
   messages
 })
 
-
+const _ = require('lodash')
 /* eslint-disable no-new */
 new Vue({
   i18n,
