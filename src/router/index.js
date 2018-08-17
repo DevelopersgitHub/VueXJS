@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import User from '../components/User'
+import App from '../App'
 
 Vue.use(Router)
 
 export const router = new Router({
   mode: 'history',
   routes: [
-    {
+    /*{
       path: '/user/:name',
       name: 'user',
       component: User,
-    }
+    }*/
   ],
 });
     /*{

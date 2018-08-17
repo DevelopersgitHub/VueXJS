@@ -110,7 +110,20 @@ export const i18n = new VueI18n({
 })
 
 
-
+var tabs = [
+  {
+    name: 'Home',
+    template: '<div><h1>Home</h1></div>'
+  },
+  {
+    name: 'User',
+    template: '<div><h1>User</h1></div>'
+  },
+  {
+    name: 'UserPath',
+    template: '<div><h1>UserPath</h1></div>'
+  }
+]
 
 /* eslint-disable no-new */
 new Vue({
