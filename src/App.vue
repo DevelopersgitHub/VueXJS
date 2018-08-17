@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <button @click="show = !show">
+     <!-- <input v-model="docState"/>-->
+      <p>{{docState}}</p>
+    <transition name="fade" mode="out-in">
+      <button :key="docState">{{buttonMessage}}</button>
+    </transition>
+    <hr>
+    <!--<button @click="show = !show">
       Переключить
     </button>
     <transition
@@ -13,7 +19,7 @@
         Демо
       </p>
     </transition>
-
+-->
     <!--<transition name="slide-fade">
       <p v-if="show">Name</p>
     </transition>
@@ -84,7 +90,20 @@
       return {
         tabs: tabs,
         currentTab: tabs[0],
-        show: false
+        show: false,
+        docState: ''
+      }
+    },
+    computed: {
+      buttonMessage() {
+        switch (this.docState) {
+          case 'edit' :
+            return 'Edit';
+          case 'save' :
+            return 'save';
+          case 'cancel' :
+            return 'cancel'
+        }
       }
     },
     methods: {
@@ -92,18 +111,18 @@
         el.style.opacity = 0
       },
       enter: function (el, done) {
-        Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })
-        Velocity(el, { fontSize: '1em' }, { complete: done })
+        Velocity(el, {opacity: 1, fontSize: '1.4em'}, {duration: 300})
+        Velocity(el, {fontSize: '1em'}, {complete: done})
       },
       leave: function (el, done) {
-        Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
-        Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+        Velocity(el, {translateX: '15px', rotateZ: '50deg'}, {duration: 600})
+        Velocity(el, {rotateZ: '100deg'}, {loop: 2})
         Velocity(el, {
           rotateZ: '45deg',
           translateY: '30px',
           translateX: '30px',
           opacity: 0
-        }, { complete: done })
+        }, {complete: done})
       }
     }
 
@@ -176,21 +195,24 @@
   .slide-fade-enter-active {
     transition: all .3s ease;
   }
+
   .slide-fade-leave-active {
     transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
+
   .slide-fade-enter, .slide-fade-leave-to {
     transform: translateX(10px);
     opacity: 0;
   }
 
-
   .bounce-enter-active {
     animation: bounce-in .5s;
   }
+
   .bounce-leave-active {
     animation: bounce-in .5s reverse;
   }
+
   @keyframes bounce-in {
     0% {
       transform: scale(0);
