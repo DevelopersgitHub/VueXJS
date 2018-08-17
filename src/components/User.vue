@@ -1,7 +1,22 @@
 <template>
   <div id="user">
-    <p v-model="locale">{{ $t("message.hello") }}</p>
-    <button @click="onClick"></button>
+
+    <h2 class="m-l-200"></h2>
+    <div class="container_iframe animated slideInLeft">
+      <iframe width="560" height="315"
+              src="https://www.youtube.com/embed/VBOSOREJE68"
+              frameborder="0"
+              allowfullscreen>
+      </iframe>
+    </div>
+    <div class="animated bounceIn" style="margin-right: 400px">
+      <ul class="p-r-200" v-for="user in users">
+        <li style="list-style: none">
+          Count of sec watch for {{user.name}} : {{user.time_limits}}
+          <button @click="count(user)">{{ user.time_limits }}</button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -14,41 +29,51 @@
           {
             id: 1,
             name: 'Vlad',
-            locale: 'ja'
+            time_limits: 120
           },
           {
             id: 2,
             name: 'Mikhail',
-            locale: 'en'
+            time_limits: 60
           }
-        ]
+        ],
+        valueTime: 0
       }
     },
-    watch: {
-      '$route'(to, from) {
-        this.locale = to.params;
-        if (this.locale === 'vlad') {
-          this.$i18n.locale = this.users.filter(el => el.id === 1).locale;
-        } else {
-          this.$i18n.locale = this.users[1].locale;
+    /*  watch: {
+        valueTime() {
+          if (this.valueTime === 0) {
+            if (this.$route.params === 1) {
+              this.valueTime = this.users[0].time_limits
+            } else {
+              this.valueTime = this.users[1].time_limits
+            }
+          }
         }
-      }
-    },
-   /* beforeRouteUpdate (to, from, next) {
-      this.locale = to.params;
-      if (this.locale === 'vlad') {
-        this.$i18n.locale = 'ja';
-      } else {
-        this.$i18n.locale = 'en';
-      }
-      next()
-    },*/
+      },*/
     methods: {
-      onClick() {
-        this.$router.push('/user/mihail');
+      count(value) {
+        if (Number(this.$route.params.id) === value.id) {
+          this.timer(value.time_limits)
+        }
+      },
+      timer(value) {
+        value--;
+        console.log(value)
+        if (value > 0) {
+          setTimeout(() => {
+            this.timer()
+          }, 1000)
+        }
+
+        //this.$router.push('/');
+
+
       }
     }
   }
+
+
 </script>
 
 <style>
@@ -59,5 +84,9 @@
     justify-content: center;
   }
 
+  .container_iframe {
+    border-bottom: 5px solid black;
+    border-radius: 2px;
+  }
 
 </style>

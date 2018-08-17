@@ -1,17 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import App from '../App'
+import User from '../components/User'
 
 Vue.use(Router)
 
 export const router = new Router({
   mode: 'history',
   routes: [
-    /*{
-      path: '/user/:name',
+    {
+      path: '/',
+      name: 'home',
+      component: {
+        template: '<div><h1>Home</h1></div>'
+      },
+    },
+    {
+      path: '/user/:id',
       name: 'user',
       component: User,
-    }*/
+    }
   ],
 });
     /*{
