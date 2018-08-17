@@ -28,6 +28,13 @@
     </transition-group>
     <hr>
 
+
+    <div id="animated-number-demo">
+      <input v-model.number="number" type="number" step="20">
+      <p>{{ animatedNumber }}</p>
+    </div>
+
+
     <!--<button @click="show = !show">
       Переключить
     </button>
@@ -84,6 +91,7 @@
 <script>
 
   import "../node_modules/velocity-animate/velocity.min"
+  import "../node_modules/gsap/TweenMax"
 
   let tabs = [
     {
@@ -115,10 +123,20 @@
         show: false,
         docState: '',
         items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        nextItem: 10
+        nextItem: 10,
+        number: 0,
+        betweenNumber: 0
+      }
+    },
+    watch: {
+      number(newValue) {
+        TweenLite.to(this.$data, 0.5, {betweenNumber: newValue})
       }
     },
     computed: {
+      animatedNumber: function() {
+        return this.betweenNumber.toFixed(0);
+      },
       buttonMessage() {
         switch (this.docState) {
           case 'edit' :
@@ -294,7 +312,6 @@
     position: absolute;
   }
 
-
   .flip-container {
     perspective: 1000px;
   }
@@ -307,12 +324,14 @@
     width: 320px;
     height: 480px;
   }
+
   .flipper {
     transition: 0.6s;
     transform-style: preserve-3d;
 
     position: relative;
   }
+
   .front, .back {
     backface-visibility: hidden;
 
@@ -320,29 +339,30 @@
     top: 0;
     left: 0;
   }
+
   .front {
     z-index: 2;
   }
+
   .back {
     transform: rotateY(180deg);
   }
 
+  /*
+    .vertical.flip-container {
+      position: relative;
+    }
 
-/*
-  .vertical.flip-container {
-    position: relative;
-  }
+    .vertical .back {
+      transform: rotateX(180deg);
+    }
 
-  .vertical .back {
-    transform: rotateX(180deg);
-  }
+    .vertical.flip-container .flipper {
+      transform-origin: 100% 213.5px; !* half of height *!
+    }
 
-  .vertical.flip-container .flipper {
-    transform-origin: 100% 213.5px; !* half of height *!
-  }
-
-  .vertical.flip-container:hover .flipper {
-    transform: rotateX(-180deg);
-  }*/
+    .vertical.flip-container:hover .flipper {
+      transform: rotateX(-180deg);
+    }*/
 
 </style>
