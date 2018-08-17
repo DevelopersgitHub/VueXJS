@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import { router } from './router'
+import {router} from './router'
 import store from './store'
 import filterApp from './filters/AppFilter'
 import BootstrapVue from 'bootstrap-vue';
@@ -58,7 +58,6 @@ Vue.filter('filterApp',
 */
 
 
-
 Vue.component('result', {
   data() {
     return {
@@ -89,8 +88,6 @@ Vue.component('result', {
 })
 
 
-
-
 const messages = {
   en: {
     message: {
@@ -110,6 +107,25 @@ export const i18n = new VueI18n({
 })
 
 const _ = require('lodash')
+
+
+Vue.component('anchored-heading', {
+  data() {
+    return {
+      blogTitle: 'Title',
+      props: {
+        level: {
+          type: Number,
+          required: true
+        }
+      }
+    }
+  },
+  render(createElement) {
+    return createElement('h1', this.blogTitle)
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   i18n,
@@ -125,5 +141,13 @@ new Vue({
   // },
   // filters: {filterApp},
   components: {App},
+  data() {
+    return {
+      blogTitle: 'Title'
+    }
+  },
   template: '<App/>'
+  /*render(createElement) {
+    return createElement('h1', this.blogTitle)
+  }*/
 })
