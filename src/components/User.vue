@@ -1,19 +1,16 @@
 <template>
   <div id="user">
-
     <h2 class="m-l-200"></h2>
     <div class="container_iframe animated slideInLeft">
-      <iframe width="560" height="315"
-              src="https://www.youtube.com/embed/VBOSOREJE68"
-              frameborder="0"
-              allowfullscreen>
-      </iframe>
+      <iframe v-if="link.length" width="300" height="200" :src="link" allow="autoplay"
+              frameborder="0" allowfullscreen></iframe>
     </div>
     <div class="animated bounceIn" style="margin-right: 400px">
       <ul class="p-r-200" v-for="user in users">
-        <li style="list-style: none">
-          Count of sec watch for {{user.name}} : {{user.time_limits}}
-          <button @click="count(user)">{{ user.time_limits }}</button>
+        <li v-if="Number($route.params.id) === user.id" style="list-style: none">
+          <p> Count of sec watch for {{user.name}} : {{user.time_limits}}</p>
+          <button @click="playVid(user)">Play/Pause</button>
+          <br>
         </li>
       </ul>
     </div>
@@ -21,10 +18,12 @@
 </template>
 
 <script>
+
   export default {
     data() {
       return {
         locale: '',
+        link: 'https://www.youtube.com/embed/VBOSOREJE68?&autoplay=1',
         users: [
           {
             id: 1,
@@ -36,43 +35,45 @@
             name: 'Mikhail',
             time_limits: 60
           }
-        ],
-        valueTime: 0
+        ]
       }
     },
-    /*  watch: {
-        valueTime() {
-          if (this.valueTime === 0) {
-            if (this.$route.params === 1) {
-              this.valueTime = this.users[0].time_limits
-            } else {
-              this.valueTime = this.users[1].time_limits
-            }
-          }
-        }
-      },*/
+    created() {
+      this.setData()
+    },
     methods: {
-      count(value) {
-        if (Number(this.$route.params.id) === value.id) {
-          this.timer(value.time_limits)
+      setData() {
+        console.log(JSON.parse(localStorage.getItem('users')))
+        if (!JSON.parse(localStorage.getItem('users'))) {
+          localStorage.setItem("users", JSON.stringify(this.users));
+        } else{
+          this.users = JSON.parse(localStorage.getItem('users'))
         }
       },
       timer(value) {
         value--;
-        console.log(value)
+        let idx = this.users.findIndex(e => e.id === Number(this.$route.params.id))
+        this.users[idx].time_limits = value
+        console.log(this.users[idx].time_limits)
+        localStorage.setItem("users", JSON.stringify(this.users));
         if (value > 0) {
           setTimeout(() => {
-            this.timer()
+            this.timer(value);
           }, 1000)
+        } else {
+          this.link = ''
+          this.$router.push('/');
         }
-
-        //this.$router.push('/');
-
-
+      },
+      playVid(value) {
+        if (Number(this.$route.params.id) === value.id) {
+          this.timer(value.time_limits)
+        } else {
+          this.$router.push(`${value.id}`)
+        }
       }
     }
   }
-
 
 </script>
 
