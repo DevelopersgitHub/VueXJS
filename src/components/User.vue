@@ -70,7 +70,7 @@
         this.global_time = value
         let idx = this.users.findIndex(e => e.id === Number(this.$route.params.id))
         this.users[idx].time_limits = value
-        if (value > 0 && this.link.includes('autoplay=1')) {
+        if (value > 0 || this.link.includes('autoplay=1')) {
           setTimeout(() => {
             this.timer(value);
           }, 1000)
