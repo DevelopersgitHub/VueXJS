@@ -2,14 +2,18 @@
   <div id="user">
     <h2 class="m-l-200"></h2>
     <div class="container_iframe animated slideInLeft">
-      <iframe v-if="link.length" width="300" height="200" :src="link" allow="autoplay"
-              frameborder="0" allowfullscreen></iframe>
+      <!--      allow="autoplay"-->
+      <iframe type="text/html" width="300" height="200"
+              v-if="link.length" :src="link"
+              frameborder="0" allowfullscreen allow="autoplay">
+      </iframe>
+      <br/>
     </div>
     <div class="animated bounceIn" style="margin-right: 400px">
       <ul class="p-r-200" v-for="user in users">
         <li v-if="Number($route.params.id) === user.id" style="list-style: none">
           <p> Count of sec watch for {{user.name}} : {{user.time_limits}}</p>
-          <button @click="playVid(user)">Play/Pause</button>
+          <button @click="valueS(user)">Play/Pause</button>
           <br>
         </li>
       </ul>
@@ -23,7 +27,7 @@
     data() {
       return {
         locale: '',
-        link: 'https://www.youtube.com/embed/VBOSOREJE68?&autoplay=1',
+        link: 'https://www.youtube.com/embed/VBOSOREJE68?autoplay=0',
         users: [
           {
             id: 1,
@@ -35,37 +39,53 @@
             name: 'Mikhail',
             time_limits: 60
           }
-        ]
+        ],
+        global_time: 0,
+        init: false
       }
     },
+    // watch: {
+    //   link() {
+    //     if (this.init) {
+    //       localStorage.setItem("users", JSON.stringify(this.users));
+    //     } else {
+    //       this.init = true;
+    //     }
+    //   }
+    // },
     created() {
-      this.setData()
+      this.setData();
     },
     methods: {
       setData() {
         console.log(JSON.parse(localStorage.getItem('users')))
         if (!JSON.parse(localStorage.getItem('users'))) {
           localStorage.setItem("users", JSON.stringify(this.users));
-        } else{
+        } else {
           this.users = JSON.parse(localStorage.getItem('users'))
         }
       },
       timer(value) {
         value--;
+        this.global_time = value
         let idx = this.users.findIndex(e => e.id === Number(this.$route.params.id))
         this.users[idx].time_limits = value
-        console.log(this.users[idx].time_limits)
-        localStorage.setItem("users", JSON.stringify(this.users));
-        if (value > 0) {
+        if (value > 0 && this.link.includes('autoplay=1')) {
           setTimeout(() => {
             this.timer(value);
           }, 1000)
         } else {
-          this.link = ''
-          this.$router.push('/');
+          localStorage.setItem("users", JSON.stringify(this.users));
         }
       },
-      playVid(value) {
+      valueS(value) {
+        this.link = this.link.includes('autoplay=1') ? this.link.replace(/autoplay=1/, 'autoplay=0') : this.link.replace(/autoplay=0/, 'autoplay=1')
+        if (this.link.includes('autoplay=1')) {
+          this.count(value);
+          localStorage.setItem("users", JSON.stringify(this.users));
+        }
+      },
+      count(value) {
         if (Number(this.$route.params.id) === value.id) {
           this.timer(value.time_limits)
         } else {
@@ -88,6 +108,17 @@
   .container_iframe {
     border-bottom: 5px solid black;
     border-radius: 2px;
+  }
+
+  .video-control {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #00f;
+  }
+
+  iframe {
+    width: 100%;
+    border: none;
   }
 
 </style>

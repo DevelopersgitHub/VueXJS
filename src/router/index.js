@@ -18,7 +18,7 @@ export const router = new Router({
     {
       path: '/user/:id',
       name: 'user',
-      component: User,
+      component: User
     }
   ],
 });
