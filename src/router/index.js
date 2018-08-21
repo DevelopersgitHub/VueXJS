@@ -16,12 +16,12 @@ export const router = new Router({
       },
     },
     {
-      path: '/user/:id',
-      name: 'user',
-      component: User
+      path: '/product',
+      name: 'product',
+      component: () => import('../components/Product')
     }
-  ],
-});
+  ]
+})
 /*{
   path: '/user/:userID',
   name: 'user',
