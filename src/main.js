@@ -8,11 +8,16 @@ import filterApp from './filters/AppFilter'
 import BootstrapVue from 'bootstrap-vue';
 // import VueLocalStorage from 'vue-localstorage';
 import VueI18n from 'vue-i18n';
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
+
+Vue.use(VueMoment, {
+  moment,
+})
 
 Vue.use(BootstrapVue)
 
 Vue.use(VueI18n)
-
 
 // Vue.use(VueLocalStorage)
 
@@ -106,8 +111,6 @@ export const i18n = new VueI18n({
   messages
 })
 
-const _ = require('lodash')
-
 
 Vue.component('anchored-heading', {
   data() {
@@ -125,6 +128,7 @@ Vue.component('anchored-heading', {
     return createElement('h1', this.blogTitle)
   }
 })
+
 
 /* eslint-disable no-new */
 new Vue({

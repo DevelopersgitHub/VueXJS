@@ -19,6 +19,11 @@ export const router = new Router({
       path: '/product',
       name: 'product',
       component: () => import('../components/Product')
+    },
+    {
+      path: '/date',
+      name: 'date',
+      component: () => import('../components/Date')
     }
   ]
 })
