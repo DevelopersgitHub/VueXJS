@@ -14,7 +14,6 @@
 
 <script>
   let moment = require('moment');
-
   export default {
     name: "Date",
     data() {
@@ -25,17 +24,12 @@
     },
     created() {
       this.someDate = Date.now();
-      this.startTime();
+      // console.log(_.last([1,2,3]), 'fdsf')
     },
     methods: {
-      startTime() {
-        setInterval(() => {
-          this.someDate += 1;
-          this.txt = moment.unix(this.someDate).format('MMMM Do YYYY, h:mm:ss a');
-        }, 1000);
-      }
     }
   }
+
 </script>
 
 <style>

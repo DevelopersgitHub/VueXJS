@@ -17,6 +17,7 @@ Vue.use(VueMoment, {
 
 Vue.use(BootstrapVue)
 
+
 Vue.use(VueI18n)
 
 // Vue.use(VueLocalStorage)
@@ -110,6 +111,8 @@ export const i18n = new VueI18n({
   locale: 'ja',
   messages
 })
+
+const _ = require('lodash')
 
 
 Vue.component('anchored-heading', {

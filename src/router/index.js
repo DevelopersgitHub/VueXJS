@@ -24,6 +24,11 @@ export const router = new Router({
       path: '/date',
       name: 'date',
       component: () => import('../components/Date')
+    },
+    {
+      path: '/table/:id',
+      name: 'table',
+      component: () => import('../components/UsersTable')
     }
   ]
 })
