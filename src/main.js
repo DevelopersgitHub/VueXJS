@@ -114,7 +114,6 @@ export const i18n = new VueI18n({
 
 const _ = require('lodash')
 
-
 Vue.component('anchored-heading', {
   data() {
     return {
@@ -133,6 +132,26 @@ Vue.component('anchored-heading', {
 })
 
 
+import vueSlider from '../node_modules/vue-slider-component/dist';
+import {generalData} from "./mixins/main_mixins";
+
+
+Vue.component('vue-slider-custom', {
+  props: ['color'],
+  data() {
+    return {
+      child_color: this.color,
+    }
+  },
+  components: {
+    vueSlider
+  },
+  template: '<div><div :style="{ background: `rgb(${child_color.red},${child_color.green},${child_color.blue})` }" class="quadra animated bounceIn"></div>' +
+  '<vueSlider class="vueSlide" ref="slider" v-model.number="child_color.red" :min="0" :max="255" width="400px"/>' +
+  '<vueSlider class="vueSlide" ref="slider" v-model.number="child_color.green" :min="0" :max="255" width="400px"/>' +
+  '<vueSlider class="vueSlide" ref="slider" v-model.number="child_color.blue" :min="0" :max="255" width="400px"/></div>'
+});
+
 /* eslint-disable no-new */
 new Vue({
   i18n,
@@ -148,11 +167,6 @@ new Vue({
   // },
   // filters: {filterApp},
   components: {App},
-  data() {
-    return {
-      blogTitle: 'Title'
-    }
-  },
   template: '<App/>'
   /*render(createElement) {
     return createElement('h1', this.blogTitle)

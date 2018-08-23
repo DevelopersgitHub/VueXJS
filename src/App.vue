@@ -1,18 +1,27 @@
 <template>
   <div id="app">
+    <input type="number" min="0" max="255" class="text-info" v-model.number="color.red"/>
+    <input type="number" min="0" max="255" class="text-info" v-model.number="color.green"/>
+    <input type="number" min="0" max="255" class="text-info" v-model.number="color.blue"/>
+    <vue-slider-custom :color="color"></vue-slider-custom>
     <router-view></router-view>
   </div>
 </template>
 
-
 <script>
 
-  import "../node_modules/velocity-animate/velocity.min"
-  import "../node_modules/gsap/TweenMax"
-
-
   export default {
-    name: 'App'
+
+    name: 'App',
+    data() {
+      return {
+        color: {
+          red: 0,
+          green: 0,
+          blue: 0
+        }
+      }
+    }
   }
 
 </script>
@@ -39,5 +48,15 @@
     background-size: cover;
   }
 
+  .quadra {
+    display: block;
+    margin: 60px auto;
+    width: 300px;
+    height: 100px;
+  }
+
+  .vueSlide {
+    margin: 60px auto;
+  }
 
 </style>

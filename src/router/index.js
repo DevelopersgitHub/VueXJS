@@ -8,13 +8,13 @@ Vue.use(Router)
 export const router = new Router({
   mode: 'history',
   routes: [
-    {
+   /* {
       path: '/',
       name: 'home',
       component: {
-        template: '<div><h1>Home</h1></div>'
+        template: App
       },
-    },
+    },*/
     {
       path: '/product',
       name: 'product',

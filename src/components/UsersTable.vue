@@ -22,6 +22,9 @@
       </tbody>
     </table>
 
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+           placeholder="Enter color" v-model="color">
+
     <div>
       <div class="mt-3 mb-3">
         <b-modal id="modalPrevent"
@@ -66,9 +69,7 @@
         ],
         name: '',
         time_limits: '',
-        modalShow: false,
-        stopPropagation: false,
-        stopImmediatePropagation: false
+        color: ''
       }
     },
     methods: {
