@@ -10,6 +10,9 @@ import BootstrapVue from 'bootstrap-vue';
 import VueI18n from 'vue-i18n';
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
+import iView from 'iview';
+
+Vue.use(iView);
 
 Vue.use(VueMoment, {
   moment,
@@ -167,7 +170,7 @@ new Vue({
   // },
   // filters: {filterApp},
   components: {App},
-  template: '<App/>'
+  template: '<App/>',
   /*render(createElement) {
     return createElement('h1', this.blogTitle)
   }*/
