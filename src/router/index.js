@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import App from '../App'
-import User from '../components/User'
 
 Vue.use(Router)
 
@@ -11,9 +9,7 @@ export const router = new Router({
    /* {
       path: '/',
       name: 'home',
-      component: {
-        template: App
-      },
+      component: () => import ('../App')
     },*/
     {
       path: '/product',
