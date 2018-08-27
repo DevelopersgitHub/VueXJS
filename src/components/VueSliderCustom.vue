@@ -15,8 +15,8 @@
 </template>
 
 <script>
-
-  import vueSlider from 'vue-slider-component';
+/*
+  import vueSlider from 'vue-slider-component';*/
 
   export default {
     name: "VueSliderCustom",

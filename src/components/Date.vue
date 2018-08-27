@@ -1,32 +1,40 @@
 <template>
   <div id="date">
+
     <div class="animated bounceIn span-group">
       <p>{{txt}}</p>
-      <p>{{someDate}}</p>
-      <!--<span class="span-element">{{ someDate | moment("hh") }}</span>
-      <p class="d-inline">:</p>
-      <span class="span-element">{{ someDate | moment("mm")}}</span>
-      <p class="d-inline">:</p>
-      <span class="span-element">{{ someDate | moment("ss")}}</span>-->
     </div>
   </div>
 </template>
 
 <script>
+  import _ from 'lodash';
+
   let moment = require('moment');
+  let tz = require('moment-timezone');
+
   export default {
     name: "Date",
     data() {
       return {
         someDate: 0,
-        txt: ''
+        txt: 0
       }
     },
     created() {
       this.someDate = Date.now();
-      // console.log(_.last([1,2,3]), 'fdsf')
+      this.bounceMethods = _.debounce(this.startTime, 1000);
+    },
+    watch: {
+      someDate() {
+        this.bounceMethods();
+      }
     },
     methods: {
+      startTime() {
+        this.someDate++;
+        this.txt = moment(this.someDate).tz('Europe/Moscow').format('MMMM Do YYYY, h:mm:ss a');
+      }
     }
   }
 

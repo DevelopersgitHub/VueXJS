@@ -6,20 +6,15 @@ Vue.use(Router)
 export const router = new Router({
   mode: 'history',
   routes: [
-   /* {
+    {
       path: '/',
-      name: 'home',
-      component: () => import ('../App')
-    },*/
+      name: 'date',
+      component: () => import ('../components/Date')
+    },
     {
       path: '/product',
       name: 'product',
       component: () => import('../components/Product')
-    },
-    {
-      path: '/date',
-      name: 'date',
-      component: () => import('../components/Date')
     },
     {
       path: '/table/:id',
