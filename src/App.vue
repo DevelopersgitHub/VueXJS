@@ -32,7 +32,7 @@
     color: dimgray;
     padding-top: 60px;
     max-height: 1024px;
-    background: url('./assets/fon.jpeg');
+    background: url('./assets/fone.jpg');
     background-size: cover;
   }
 

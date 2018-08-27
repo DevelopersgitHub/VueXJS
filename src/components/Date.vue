@@ -1,7 +1,11 @@
 <template>
   <div id="date">
     <div class="animated bounceIn span-group">
-      <p>{{txt | filterDate}}</p>
+      <p>{{txt | filterHour}}</p>
+      <span class="points">:</span>
+      <p>{{txt | filterMinutes}}</p>
+      <span class="points">:</span>
+      <p>{{txt | filterSeconds}}</p>
     </div>
   </div>
 </template>
@@ -36,7 +40,7 @@
     },
     computed: {
       txt: {
-        get(){
+        get() {
           return this.someDate;
         },
         set(value) {
@@ -45,8 +49,14 @@
       }
     },
     filters: {
-      filterDate() {
-        return moment().format('h:mm:ss');
+      filterHour() {
+        return moment().format('h');
+      },
+      filterMinutes() {
+        return moment().format('mm');
+      },
+      filterSeconds() {
+        return moment().format('ss');
       }
     }
   }
@@ -77,5 +87,23 @@
     width: 100px;
     background-color: whitesmoke;
     color: black;
+  }
+
+  .span-group {
+    display: block;
+    height: 150px;
+    background: black;
+    border: 2px solid slategrey;
+    border-radius: 5px;
+  }
+
+  p {
+    display: inline-block;
+    font-size: 10vh;
+    color: white;
+  }
+  .points {
+    font-size: 10vh;
+    color: white;
   }
 </style>
