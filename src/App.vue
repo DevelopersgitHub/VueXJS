@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <side-bar></side-bar>
     <router-view></router-view>
   </div>
 </template>
@@ -7,8 +8,10 @@
 
 <script>
 
+  import SideBar from "./components/Main/SideBar";
   export default {
-    name: 'App'
+    name: 'App',
+    components: {SideBar}
   }
 
 </script>
@@ -24,7 +27,8 @@
   }
 
   #app {
-    min-height: 1024px;
+    overflow:  hidden;
+    min-height: 800px;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -32,7 +36,7 @@
     color: dimgray;
     padding-top: 60px;
     max-height: 1024px;
-    background: url('./assets/fone.jpg');
+    background-color: seashell;
     background-size: cover;
   }
 
