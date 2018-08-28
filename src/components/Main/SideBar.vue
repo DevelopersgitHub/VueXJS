@@ -5,7 +5,6 @@
          'down': sunDown}"
          :style="{'margin-top': value + 'px'}">
     </div>
-
     <!--<input type="text" v-model="test" @keyup.enter="add(test)"/>
     <ul>
       <li v-for="item in items">{{item}}</li>
