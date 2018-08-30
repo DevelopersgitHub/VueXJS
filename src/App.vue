@@ -1,11 +1,7 @@
 <template>
   <div id="app">
-    <div class="animated bounceInLeft m-b-10">
-      <button @click="unblock" class="btn btn-info">Unblock editing</button>
-      <button @click="block" class="btn btn-danger">Block editing</button>
-    </div>
     <hr/>
-    <table class="table animated tada m-t-10">
+    <table class="table animated tada table-dark m-t-10">
       <thead>
       <tr>
         <th scope="col">ID</th>
@@ -14,26 +10,36 @@
         <th scope="col">Age</th>
         <th scope="col">Login</th>
         <th scope="col">Password</th>
+        <th scope="col">Block/Unblock</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="(user, index) in users" :key="index">
-        <td v-if="!todo_editing" @dblclick="editItem(user)">{{user.id}}</td>
-        <input v-else v-model="user.id" @keyup.enter="todo_editing=!todo_editing"/>
-        <td v-if="!todo_editing" @dblclick="editItem(user)">{{user.first_name}}</td>
-        <input v-else v-model="user.first_name" @keyup.enter="todo_editing=!todo_editing"/>
-        <td v-if="!todo_editing" @dblclick="editItem(user)">{{user.last_name}}</td>
-        <input v-else v-model="user.last_name" @keyup.enter="todo_editing=!todo_editing"/>
-        <td v-if="!todo_editing" @dblclick="editItem(user.id, index)">{{user.age}}</td>
-        <input v-else v-model="user.age" @keyup.enter="todo_editing=!todo_editing"/>
-        <td v-if="!todo_editing" @dblclick="editItem(user)">{{user.login}}</td>
-        <input v-else v-model="user.login" @keyup.enter="todo_editing=!todo_editing"/>
-        <td v-if="!todo_editing" @dblclick="editItem(user)">{{user.password}}</td>
-        <input v-else v-model="user.password" @keyup.enter="todo_editing=!todo_editing"/>
+        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.id}}</td>
+        <input class="form-control" v-else v-model="user.id" @keyup.enter="editItem(user, index)"/>
+
+        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.first_name}}</td>
+        <input class="form-control" v-else v-model="user.first_name" @keyup.enter="editItem(user, index)"/>
+
+        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.last_name}}</td>
+        <input class="form-control" v-else v-model="user.last_name" @keyup.enter="editItem(user, index)"/>
+
+        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.age}}</td>
+        <input class="form-control" v-else v-model="user.age" @keyup.enter="editItem(user, index)"/>
+
+        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.login}}</td>
+        <input class="form-control" v-else v-model="user.login" @keyup.enter="editItem(user, index)"/>
+
+        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.password}}</td>
+        <input class="form-control" v-else v-model="user.password" @keyup.enter="editItem(user, index)"/>
+
+        <td class="m-t-10">
+          <button @click="unblock" class="btn btn-info">Unblock editing</button>
+          <button @click="block(index)" class="btn btn-danger">Block editing</button>
+        </td>
       </tr>
       </tbody>
     </table>
-    <div class="footer"></div>
     <router-view></router-view>
   </div>
 </template>
@@ -53,7 +59,8 @@
       last_name: last_names[Math.floor(Math.random() * 6 + 1)],
       age: ages[Math.floor(Math.random() * 6 + 1)],
       login: logins[Math.floor(Math.random() * 6 + 1)],
-      password: passwords[Math.floor(Math.random() * 6 + 1)]
+      password: passwords[Math.floor(Math.random() * 6 + 1)],
+      editing: false
     }
   }
   export default {
@@ -66,14 +73,16 @@
       }
     },
     methods: {
-      editItem(id, index) {
-        this.todo_editing = true;
+      block(id) {
+        Object.freeze(this.users[id])
+        console.log(Object.isFrozen(this.users[id]))
       },
-      block() {
-        this.users = Object.freeze(this.users);
+      editItem(user, idx) {
+        user.editing = !user.editing;
+        this.users[idx] =  user
       },
       unblock() {
-        this.newUsers = Object.assign([], this.users)
+        console.log(this.users)
       }
     }
   }
@@ -97,7 +106,7 @@
     text-align: center;
     color: dimgray;
     padding-top: 60px;
-    background-color: seashell;
+    background: url('https://cdn.magdeleine.co/wp-content/uploads/2015/02/YS4_5968_69_70-2-3-1400x933.jpg');
     background-size: cover;
   }
 
