@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <hr/>
-    <table class="table animated tada table-dark m-t-10">
+    <table class="table table-dark m-t-10">
       <thead>
       <tr>
         <th scope="col">ID</th>
@@ -35,11 +35,14 @@
 
         <td class="m-t-10">
           <button @click="unblock" class="btn btn-info">Unblock editing</button>
-          <button @click="block(index)" class="btn btn-danger">Block editing</button>
+          <button @click="block(user)" class="btn btn-danger">Block editing</button>
         </td>
       </tr>
       </tbody>
     </table>
+
+        <p>{{newUsers.age}}</p>
+
     <router-view></router-view>
   </div>
 </template>
@@ -69,17 +72,33 @@
       return {
         users: usersRandom,
         todo_editing: false,
-        newUsers: []
+        newUsers: {}
+      }
+    },
+    watch: {
+      users(value){
+        value = this.newUsers;
       }
     },
     methods: {
-      block(id) {
-        Object.freeze(this.users[id])
-        console.log(Object.isFrozen(this.users[id]))
+      block(obj) {
+      /*  let propNames = Object.getOwnPropertyNames(obj);
+        propNames.forEach((name) => {
+          let prop = obj[name];
+          if (typeof prop === 'object' && prop !== null) {
+
+*/
+            this.newUsers = Object.freeze(obj);
+            console.log(this.newUsers)
+
+/*
+          }
+        });*/
+        return Object.freeze(obj);
       },
       editItem(user, idx) {
         user.editing = !user.editing;
-        this.users[idx] =  user
+        this.users[idx] = user
       },
       unblock() {
         console.log(this.users)
@@ -120,5 +139,4 @@
   .vueSlide {
     margin: 60px auto;
   }
-
 </style>
