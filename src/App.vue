@@ -1,47 +1,49 @@
 <template>
   <div id="app">
     <hr/>
-    <table class="table table-dark m-t-10">
-      <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">First name</th>
-        <th scope="col">Last name</th>
-        <th scope="col">Age</th>
-        <th scope="col">Login</th>
-        <th scope="col">Password</th>
-        <th scope="col">Block/Unblock</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="(user, index) in users" :key="index">
-        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.id}}</td>
-        <input class="form-control" v-else v-model="user.id" @keyup.enter="editItem(user, index)"/>
+    <p style="color: white">{{info}}</p>
+    <hr/>
+    <!-- <table class="table table-dark m-t-10">
+       <thead>
+       <tr>
+         <th scope="col">ID</th>
+         <th scope="col">First name</th>
+         <th scope="col">Last name</th>
+         <th scope="col">Age</th>
+         <th scope="col">Login</th>
+         <th scope="col">Password</th>
+         <th scope="col">Block/Unblock</th>
+       </tr>
+       </thead>
+       <tbody>
+       <tr v-for="(user, index) in users" :key="index">
+         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.id}}</td>
+         <input class="form-control" v-else v-model="user.id" @keyup.enter="editItem(user, index)"/>
 
-        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.first_name}}</td>
-        <input class="form-control" v-else v-model="user.first_name" @keyup.enter="editItem(user, index)"/>
+         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.first_name}}</td>
+         <input class="form-control" v-else v-model="user.first_name" @keyup.enter="editItem(user, index)"/>
 
-        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.last_name}}</td>
-        <input class="form-control" v-else v-model="user.last_name" @keyup.enter="editItem(user, index)"/>
+         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.last_name}}</td>
+         <input class="form-control" v-else v-model="user.last_name" @keyup.enter="editItem(user, index)"/>
 
-        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.age}}</td>
-        <input class="form-control" v-else v-model="user.age" @keyup.enter="editItem(user, index)"/>
+         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.age}}</td>
+         <input class="form-control" v-else v-model="user.age" @keyup.enter="editItem(user, index)"/>
 
-        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.login}}</td>
-        <input class="form-control" v-else v-model="user.login" @keyup.enter="editItem(user, index)"/>
+         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.login}}</td>
+         <input class="form-control" v-else v-model="user.login" @keyup.enter="editItem(user, index)"/>
 
-        <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.password}}</td>
-        <input class="form-control" v-else v-model="user.password" @keyup.enter="editItem(user, index)"/>
+         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.password}}</td>
+         <input class="form-control" v-else v-model="user.password" @keyup.enter="editItem(user, index)"/>
 
-        <td class="m-t-10">
-          <button @click="unblock" class="btn btn-info">Unblock editing</button>
-          <button @click="block(user)" class="btn btn-danger">Block editing</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+         <td class="m-t-10">
+           <button @click="unblock" class="btn btn-info">Unblock editing</button>
+           <button @click="block(users)" class="btn btn-danger">Block editing</button>
+         </td>
+       </tr>
+       </tbody>
+     </table>
 
-        <p>{{newUsers.age}}</p>
+     <p>{{newUsers.age}}</p>-->
 
     <router-view></router-view>
   </div>
@@ -66,34 +68,37 @@
       editing: false
     }
   }
+
+  import {wss} from './assets/Socket/websocket';
+
   export default {
     name: 'App',
     data() {
       return {
         users: usersRandom,
         todo_editing: false,
-        newUsers: {}
+        newUsers: {},
+        info: []
       }
     },
     watch: {
-      users(value){
+      users(value) {
         value = this.newUsers;
       }
     },
     methods: {
       block(obj) {
-      /*  let propNames = Object.getOwnPropertyNames(obj);
-        propNames.forEach((name) => {
-          let prop = obj[name];
-          if (typeof prop === 'object' && prop !== null) {
+        /*  let propNames = Object.getOwnPropertyNames(obj);
+          propNames.forEach((name) => {
+            let prop = obj[name];
+            if (typeof prop === 'object' && prop !== null) {
+  */
+        this.users = Object.freeze(obj);
+        console.log(this.newUsers);
 
-*/
-            this.newUsers = Object.freeze(obj);
-            console.log(this.newUsers)
-
-/*
-          }
-        });*/
+        /*
+                  }
+                });*/
         return Object.freeze(obj);
       },
       editItem(user, idx) {
@@ -103,15 +108,30 @@
       unblock() {
         console.log(this.users)
       }
+    },
+    created() {
+      wss.onmessage = (msg) => {
+        this.info = JSON.parse(event.data);
+        for (let key of  this.info) {
+          if (key !== null && typeof(key) === 'object' && key !== 'hb') {
+            this.info = key[0];
+          }
+        }
+      };
+      let msg = JSON.stringify({
+        event: 'subscribe',
+        channel: 'ticker',
+        symbol: 'tBTCUSD'
+      })
+      wss.onopen = () => {
+        console.log('WebSocket is connected.');
+        wss.send(msg);
+      };
     }
   }
 </script>
 
-
 <style>
-  @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-  @import "../node_modules/animate.css/animate.min.css";
-
   html, body {
     margin: 0;
     padding: 0;
