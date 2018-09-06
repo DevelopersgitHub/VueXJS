@@ -111,12 +111,8 @@
     },
     created() {
       wss.onmessage = (msg) => {
-        this.info = JSON.parse(event.data);
-        for (let key of  this.info) {
-          if (key !== null && typeof(key) === 'object' && key !== 'hb') {
-            this.info = key[0];
-          }
-        }
+        let m = JSON.parse(msg.data)
+        this.info = !Array.isArray(m) ? '' : (m[1] !== 'hb' ? m[1][0] : this.info);
       };
       let msg = JSON.stringify({
         event: 'subscribe',
