@@ -112,6 +112,7 @@
     created() {
       wss.onmessage = (msg) => {
         let m = JSON.parse(msg.data)
+        console.log(m)
         this.info = !Array.isArray(m) ? '' : (m[1] !== 'hb' ? m[1][0] : this.info);
       };
       let msg = JSON.stringify({
