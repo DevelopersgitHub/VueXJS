@@ -1,44 +1,74 @@
 <template>
   <div id="date">
-    <div class="animated bounceIn span-group">
-      <p>{{txt | filterHour}}</p>
-      <span class="points">:</span>
-      <p>{{txt | filterMinutes}}</p>
-      <span class="points">:</span>
-      <p>{{txt | filterSeconds}}</p>
-    </div>
+    <input type="text" style="border-color: darkcyan;overflow:hidden" id="gg" v-model="someText">
+    <p style="width: 50%;color: cadetblue">{{secProperty}}</p>
+    <!--<br/>-->
+    <!--<p class="w-50" style="border-color: darkcyan;">{{someText}}</p>-->
+    <!--<br/>-->
+    <!--<p v-if="someText.length" style="width:50%;color:darkcyan;">{{someText | myFilter}}</p>-->
+    <!--<div class="animated bounceIn span-group">-->
+    <!--<p>{{txt | filterHour}}</p>-->
+    <!--<span class="points">:</span>-->
+    <!--<p>{{txt | filterMinutes}}</p>-->
+    <!--<span class="points">:</span>-->
+    <!--<p>{{txt | filterSeconds}}</p>-->
+    <!--</div>-->
   </div>
 </template>
 
 <script>
   import _ from 'lodash';
 
-  let moment = require('moment');
-  let tz = require('moment-timezone');
-  let format = require('vue-moment')
+  let moment = require('moment'),
+    tz = require('moment-timezone'),
+    format = require('vue-moment')
 
   export default {
     name: "Date",
     data() {
       return {
-        someDate: 0
+        someDate: 0,
+        secProperty: ''
       }
     },
-    created() {
-      this.someDate = Date.now();
-      this.bounceMethods = _.debounce(this.startTime, 1000);
-    },
+    // created() {
+    //   this.someDate = Date.now();
+    //   this.bounceMethods = _.debounce(this.startTime, 1000);
+    // },
     methods: {
       startTime() {
         this.someDate++;
-      }
+      },
+      // revText(){
+      //   this.someText = this.someText + ' ...'
+      // }
     },
     watch: {
-      someDate() {
-        this.bounceMethods();
-      }
+
+      // value = value.length > 0 ? (value.length > 50 ? value.slice(0, -3) + '...' : '') : ''
     },
+    // someDate() {
+    //   this.bounceMethods();
+    // },
+
     computed: {
+      someText: {
+        get() {
+          return this.secProperty
+        },
+        set(value) {
+          if (value.length > 50) {
+            this.secProperty = value.slice(0, -3) + '...';
+            console.log(this.secProperty)
+          }
+        }
+      },
+      current_time: {
+        get() {
+          let date = moment("h:mm:ss")
+          return Date.parse(date)
+        }
+      },
       txt: {
         get() {
           return this.someDate;
@@ -46,19 +76,37 @@
         set(value) {
           this.txt = value;
         }
-      }
+      },
+      // someText(value) {
+      //   return value + ' ...'
+      // }
     },
     filters: {
-      filterHour() {
-        return moment().format('h');
-      },
-      filterMinutes() {
-        return moment().format('mm');
-      },
-      filterSeconds() {
-        return moment().format('ss');
-      }
-    }
+      // filterHour() {
+      //   return moment().format('h');
+      // },
+      // filterMinutes() {
+      //   return moment().format('mm');
+      // },
+      // filterSeconds() {
+      //   return moment().format('ss');
+      // }
+    },
+    // directives: {
+    //   random: {
+    //     // update: (el) => {
+    //     //   if (el.scrollWidth >= el.offsetWidth) {
+    //           if (el.target.value.length === 1) {
+    //             el.target.value += '...';
+    //           }
+    //         }
+    //         // while (el.scrollWidth >= el.offsetWidth) {
+    //         //   el.value = el.value.slice(0, -1) + '...'
+    //         //
+    //         // }
+    //       }
+    //     }
+    //   }
   }
 
 </script>
@@ -99,11 +147,19 @@
 
   p {
     display: inline-block;
-    font-size: 10vh;
     color: white;
   }
+
   .points {
     font-size: 10vh;
     color: white;
+  }
+
+  .has-overflow:after {
+    content: "..."
+  }
+
+  #date {
+    width: 500px;
   }
 </style>

@@ -10,6 +10,11 @@ Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false;
 
+//
+// Vue.directive('text', {
+//     inserted: el => el.focus()
+//   }
+// )
 
 /* eslint-disable no-new */
 new Vue({

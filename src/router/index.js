@@ -7,9 +7,14 @@ export const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/app',
       name: 'App',
       // redirect: () => import('../components/Main/SideBar')
+    },
+    {
+      path: '/date',
+      name: 'Moment',
+      component: () => import('../components/Date')
     }
   ]
 });

@@ -1,49 +1,52 @@
 <template>
   <div id="app">
-    <hr/>
-    <p style="color: white">{{info}}</p>
-    <hr/>
-    <!-- <table class="table table-dark m-t-10">
-       <thead>
-       <tr>
-         <th scope="col">ID</th>
-         <th scope="col">First name</th>
-         <th scope="col">Last name</th>
-         <th scope="col">Age</th>
-         <th scope="col">Login</th>
-         <th scope="col">Password</th>
-         <th scope="col">Block/Unblock</th>
-       </tr>
-       </thead>
-       <tbody>
-       <tr v-for="(user, index) in users" :key="index">
-         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.id}}</td>
-         <input class="form-control" v-else v-model="user.id" @keyup.enter="editItem(user, index)"/>
+    <!--<hr/>-->
+    <!--<p style="color: white">{{info}}</p>-->
+    <!--<hr/>-->
+     <!--<table class="table table-dark m-t-10">-->
+       <!--<thead>-->
+       <!--<tr>-->
+         <!--<th scope="col">ID</th>-->
+         <!--<th scope="col">First name</th>-->
+         <!--<th scope="col">Last name</th>-->
+         <!--<th scope="col">Age</th>-->
+         <!--<th scope="col">Login</th>-->
+         <!--<th scope="col">Password</th>-->
+         <!--<th scope="col">Block/Unblock</th>-->
+       <!--</tr>-->
+       <!--</thead>-->
+       <!--<tbody>-->
+       <!--<tr v-for="(user, index) in users" :key="index">-->
+         <!--<td class="m-t-10" @click="onClick">-->
+           <!--<div v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.id}}</div>-->
+           <!--<input class="form-control" v-else v-model="user.id" @keyup.enter="editItem(user, index)"/>-->
+         <!--</td>-->
 
-         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.first_name}}</td>
-         <input class="form-control" v-else v-model="user.first_name" @keyup.enter="editItem(user, index)"/>
 
-         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.last_name}}</td>
-         <input class="form-control" v-else v-model="user.last_name" @keyup.enter="editItem(user, index)"/>
+         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.first_name}}</td>-->
+         <!--<input class="form-control" v-else v-model="user.first_name" @keyup.enter="editItem(user, index)"/>-->
 
-         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.age}}</td>
-         <input class="form-control" v-else v-model="user.age" @keyup.enter="editItem(user, index)"/>
+         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.last_name}}</td>-->
+         <!--<input class="form-control" v-else  v-model="user.last_name" @keyup.enter="editItem(user, index)"/>-->
 
-         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.login}}</td>
-         <input class="form-control" v-else v-model="user.login" @keyup.enter="editItem(user, index)"/>
+         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.age}}</td>-->
+         <!--<input class="form-control" v-else v-model="user.age" @keyup.enter="editItem(user, index)"/>-->
 
-         <td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.password}}</td>
-         <input class="form-control" v-else v-model="user.password" @keyup.enter="editItem(user, index)"/>
+         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.login}}</td>-->
+         <!--<input class="form-control" v-else v-model="user.login" @keyup.enter="editItem(user, index)"/>-->
 
-         <td class="m-t-10">
-           <button @click="unblock" class="btn btn-info">Unblock editing</button>
-           <button @click="block(users)" class="btn btn-danger">Block editing</button>
-         </td>
-       </tr>
-       </tbody>
-     </table>
+         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.password}}</td>-->
+         <!--<input class="form-control" v-else v-model="user.password" @keyup.enter="editItem(user, index)"/>-->
 
-     <p>{{newUsers.age}}</p>-->
+         <!--&lt;!&ndash;<td class="m-t-10">&ndash;&gt;-->
+           <!--&lt;!&ndash;<button @click="unblock" class="btn btn-info">Unblock editing</button>&ndash;&gt;-->
+           <!--&lt;!&ndash;<button @click="block(users)" class="btn btn-danger">Block editing</button>&ndash;&gt;-->
+         <!--&lt;!&ndash;</td>&ndash;&gt;-->
+       <!--</tr>-->
+       <!--</tbody>-->
+     <!--</table>-->
+
+     <!--<p>{{newUsers.age}}</p>-->
 
     <router-view></router-view>
   </div>
@@ -69,7 +72,7 @@
     }
   }
 
-  import {wss} from './assets/Socket/websocket';
+  // import {wss} from './assets/Socket/websocket';
 
   export default {
     name: 'App',
@@ -78,7 +81,8 @@
         users: usersRandom,
         todo_editing: false,
         newUsers: {},
-        info: []
+        info: [].length,
+        stopPropagation: false
       }
     },
     watch: {
@@ -87,6 +91,9 @@
       }
     },
     methods: {
+      onClick(event){
+        event.preventDefault();
+      },
       block(obj) {
         /*  let propNames = Object.getOwnPropertyNames(obj);
           propNames.forEach((name) => {
@@ -103,14 +110,15 @@
       },
       editItem(user, idx) {
         user.editing = !user.editing;
-        this.users[idx] = user
+        this.users[idx] = user;
+
       },
       unblock() {
         console.log(this.users)
       }
     },
     created() {
-      wss.onmessage = (msg) => {
+      /*wss.onmessage = (msg) => {
         let m = JSON.parse(msg.data)
         console.log(m)
         this.info = !Array.isArray(m) ? '' : (m[1] !== 'hb' ? m[1][0] : this.info);
@@ -123,12 +131,15 @@
       wss.onopen = () => {
         console.log('WebSocket is connected.');
         wss.send(msg);
-      };
+      };*/
     }
   }
 </script>
 
 <style>
+  @import "../node_modules/bootstrap-vue/dist/bootstrap-vue.min.css";
+  @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
   html, body {
     margin: 0;
     padding: 0;
@@ -142,7 +153,7 @@
     text-align: center;
     color: dimgray;
     padding-top: 60px;
-    background: url('https://cdn.magdeleine.co/wp-content/uploads/2015/02/YS4_5968_69_70-2-3-1400x933.jpg');
+    background: seashell;
     background-size: cover;
   }
 
