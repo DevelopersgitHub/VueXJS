@@ -147,13 +147,14 @@
 
   #app {
     min-height: 890px;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    line-height: 14px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: dimgray;
-    padding-top: 60px;
-    background: seashell;
+    padding-top: 120px;
+    background: whitesmoke;
     background-size: cover;
   }
 

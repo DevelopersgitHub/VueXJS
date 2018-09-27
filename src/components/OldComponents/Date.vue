@@ -1,7 +1,8 @@
 <template>
   <div id="date">
-    <input type="text" style="border-color: darkcyan;overflow:hidden" id="gg" v-model="someText">
-    <p style="width: 50%;color: cadetblue">{{secProperty}}</p>
+    <input type="text" style="border-color: darkcyan;" id="gg" v-model="someText">
+    <div style="width: 50%;color: cadetblue;overflow:hidden;padding: 10px">{{secProperty}}</div>
+
     <!--<br/>-->
     <!--<p class="w-50" style="border-color: darkcyan;">{{someText}}</p>-->
     <!--<br/>-->
@@ -36,6 +37,16 @@
     //   this.bounceMethods = _.debounce(this.startTime, 1000);
     // },
     methods: {
+      // randomText() {
+      //   let size = 120,
+      //     newsContent = el,
+      //     newsText = newsContent.text();
+      //   if (newsText.length > size) {
+      //     newsContent.text(newsText.slice(0, size) + ' ...');
+      //   }
+      // },
+
+
       startTime() {
         this.someDate++;
       },
@@ -57,9 +68,13 @@
           return this.secProperty
         },
         set(value) {
-          if (value.length > 50) {
-            this.secProperty = value.slice(0, -3) + '...';
+          if (value.endsWith('...')) {
+            this.secProperty = value + '...'
+          } else if (value.length >= 40) {
+            this.secProperty = value.slice(0, -10) + '...';
             console.log(this.secProperty)
+          } else {
+            this.secProperty = value
           }
         }
       },
@@ -82,6 +97,15 @@
       // }
     },
     filters: {
+      // filterText(value) {
+      //   console.log(value)
+      //   if (value.endsWith('...')) {
+      //     return value.replace(/.{3}/, '')
+      //   } else {
+      //     return value
+      //   }
+      // }
+      // }
       // filterHour() {
       //   return moment().format('h');
       // },
@@ -94,19 +118,16 @@
     },
     // directives: {
     //   random: {
-    //     // update: (el) => {
-    //     //   if (el.scrollWidth >= el.offsetWidth) {
-    //           if (el.target.value.length === 1) {
-    //             el.target.value += '...';
-    //           }
-    //         }
-    //         // while (el.scrollWidth >= el.offsetWidth) {
-    //         //   el.value = el.value.slice(0, -1) + '...'
-    //         //
-    //         // }
+    //     inserted: (el) => {
+    //       let size = 12,
+    //         newsContent = el.innerHTML,
+    //         newsText = document.getElementById('');
+    //       if (newsText.length > size) {
+    //         newsContent.text(newsText.slice(0, size) + ' ...');
     //       }
     //     }
     //   }
+  // }
   }
 
 </script>

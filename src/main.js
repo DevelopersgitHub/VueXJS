@@ -5,6 +5,7 @@ import App from './App'
 import {router} from './router'
 import store from './store'
 import BootstrapVue from 'bootstrap-vue';
+import util from '@/components/login/settings'
 
 Vue.use(BootstrapVue);
 
@@ -16,11 +17,15 @@ Vue.config.productionTip = false;
 //   }
 // )
 
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
+  created() {
+    util.checkUpdate()
+  },
   components: {App},
   template: '<App/>'
 });

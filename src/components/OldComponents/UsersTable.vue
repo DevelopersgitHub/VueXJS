@@ -1,6 +1,6 @@
 <template>
-  <div class="userstable">
-    <table class="table table-dark animated bounce">
+  <div class="users_table">
+    <table class="table table-dark animated bounceInLeft">
       <thead>
       <tr>
         <th scope="col">ID</th>
@@ -22,31 +22,32 @@
       </tbody>
     </table>
 
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-           placeholder="Enter color" v-model="color">
+    <!--<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"-->
+    <!--placeholder="Enter color" v-model="color">-->
 
-    <div>
-      <div class="mt-3 mb-3">
-        <b-modal id="modalPrevent"
-                 ref="modal"
-                 title="Edit of data"
-                 v-model="modalShow"
-                 @ok="handleOk"
-                 @shown="clearName">
-          <form @submit.stop.prevent="handleSubmit">
-            <b-form-input type="text"
-                          placeholder="Enter your name"
-                          v-model="name">
-            </b-form-input>
-            <br/>
-            <b-form-input type="text"
-                          placeholder="Enter your time of limits"
-                          v-model="time_limits">
-            </b-form-input>
-          </form>
-        </b-modal>
-      </div>
-    </div>
+    <!--<div>-->
+    <!--<div class="mt-3 mb-3">-->
+    <!--<b-modal id="modalPrevent"-->
+    <!--ref="modal"-->
+    <!--title="Edit of data"-->
+    <!--v-model="modalShow"-->
+    <!--@ok="handleOk"-->
+    <!--@shown="clearName">-->
+    <!--<form @submit.stop.prevent="handleSubmit">-->
+    <!--<b-form-input type="text"-->
+    <!--placeholder="Enter your name"-->
+    <!--v-model="name">-->
+    <!--</b-form-input>-->
+    <!--<br/>-->
+    <!--<b-form-input type="text"-->
+    <!--placeholder="Enter your time of limits"-->
+    <!--v-model="time_limits">-->
+    <!--</b-form-input>-->
+    <!--</form>-->
+    <!--</b-modal>-->
+    <!--</div>-->
+    <!--</div>-->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -103,12 +104,17 @@
         this.clearName();
         this.$refs.modal.hide();
       }
+    },
+    created() {
+      this.$axios.get('users')
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
     }
   }
 </script>
 
 <style>
-  .userstable {
+  .users_table {
     max-width: 800px;
     margin: 200px auto;
   }
