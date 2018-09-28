@@ -13,7 +13,7 @@
       <tr v-for="(user, index) in users" @click="$router.push(`${user.id}`)">
         <th scope="row">{{user.id}}</th>
         <td>{{user.name}}</td>
-        <td>{{user.time_limits}}</td>
+        <td>{{user.email}}</td>
         <td>
           <button class="btn btn-dark" @click="onClick">Edit</button>
           <button class="btn btn-primary" type="submit" @click="removeItem">Remove</button>
@@ -57,16 +57,16 @@
     data() {
       return {
         users: [
-          {
-            id: 1,
-            name: 'Vlad',
-            time_limits: 120
-          },
-          {
-            id: 2,
-            name: 'Mikhail',
-            time_limits: 60
-          }
+          // {
+          //   id: 1,
+          //   name: 'Vlad',
+          //   time_limits: 120
+          // },
+          // {
+          //   id: 2,
+          //   name: 'Mikhail',
+          //   time_limits: 60
+          // }
         ],
         name: '',
         time_limits: '',
@@ -107,7 +107,10 @@
     },
     created() {
       this.$axios.get('users')
-        .then(res => console.log(res))
+        .then(res => {
+          console.log(res)
+          this.users = res.data
+        })
         .catch(err => console.log(err))
     }
   }

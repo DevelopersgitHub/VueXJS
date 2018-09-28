@@ -76,6 +76,10 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
+  "watchOptions": {
+    "aggregateTimeout": 300,
+    "poll": true
+  },
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"

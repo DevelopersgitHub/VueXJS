@@ -35,8 +35,8 @@
     data() {
       return {
         user: {
-          email: '',
-          password: ''
+          email: 'vlad@vlad.ru',
+          password: '123456'
         },
         card: false
       }
@@ -49,15 +49,17 @@
           password: this.user.password
         })
           .then((res) => {
-            if (Cookies.get('token') !== res.data.user.api_token) {
-              Cookies.set('token', res.data.user.api_token)
-            }
+            Cookies.set('token', res.data.user.api_token)
             this.$router.push('/users_table')
           })
           .catch(err => console.log(err))
-
       }
-    }
+    },
+    // created() {
+    //   this.$axios.get('users')
+    //     .then(res => console.log(res))
+    //     .catch(err => console.log(err))
+    // }
   }
 </script>
 

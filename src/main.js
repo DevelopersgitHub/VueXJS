@@ -23,9 +23,9 @@ new Vue({
   el: '#app',
   router,
   store,
-  created() {
+  mounted() {
     util.checkUpdate()
   },
   components: {App},
-  template: '<App/>'
+  template: '<App/>',
 });

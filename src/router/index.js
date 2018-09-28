@@ -1,40 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Cookie from 'js.cookie'
+import {routes} from './routes'
 
-Vue.use(Router);
+Vue.use(Router)
 
-export const router = new Router({
+const RouterConfig = {
   mode: 'history',
-  routes: [
-    {
-      path: '/app',
-      name: 'App',
-      // redirect: () => import('../components/OldComponents/SideBar')
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: () => import('../components/login/Login')
-    },
-    {
-      path: '/users_table',
-      name: 'User Table',
-      component: () => import('../components/OldComponents/UsersTable')
-    },
-    {
-      path: '/date',
-      name: 'Moment',
-      component: () => import('../components/OldComponents/Date')
-    },
-    {
-      path: '/product',
-      name: 'Product',
-      component: () => import('../components/OldComponents/Product')
-    },
-    {
-      path: '/403',
-      name: 'Page 403',
-      component: () => import('../components/login/Page403')
+  routes: routes
+}
+
+export const router = new Router(RouterConfig)
+
+router.beforeEach((to, from, next) => {
+  if (!Cookie.get('token')) {
+    if (to.name !== 'login') {
+      next({
+        name: 'Login'
+      })
+    } else {
+      next('gdgd')
     }
-  ]
-});
+  } else {
+    if (to.name === 'login') {
+      next()
+    }
+    else {
+      next()
+    }
+  }
+})

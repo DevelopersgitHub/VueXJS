@@ -6,14 +6,12 @@ import {router} from '@/router'
 let util = {}
 
 util.ajax = axios.create({
-  baseURL: 'http://235711d4.ngrok.io/api/',
+  baseURL: 'http://24e8db81.ngrok.io/api/',
 })
 
 util.ajax.interceptors.request.use(config => {
   if (Cookies.get('token')) {
-    config.headers.Authorization = `${Cookies.get('token')}`;
-  } else {
-    config.headers.Authorization = ''
+    config.headers.Authorization = `Bearer ${Cookies.get('token')}`;
   }
   return config
 })
@@ -21,7 +19,7 @@ util.ajax.interceptors.request.use(config => {
 util.ajax.interceptors.response.use(response => {
   return response
 }, error => {
-  if(error.response.status === 401 && !error.config._retry){
+  if (error.response.status === 401 && !error.config._retry) {
     error.config._retry = true;
     router.push({
       path: '/login'
