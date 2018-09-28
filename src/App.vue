@@ -1,58 +1,62 @@
 <template>
   <div id="app">
+    <button v-if="$route.name !== 'Login'" class="btn btn-danger mx-5 my-0" style="float: right;" @click="logout">Exit
+    </button>
     <!--<hr/>-->
     <!--<p style="color: white">{{info}}</p>-->
     <!--<hr/>-->
-     <!--<table class="table table-dark m-t-10">-->
-       <!--<thead>-->
-       <!--<tr>-->
-         <!--<th scope="col">ID</th>-->
-         <!--<th scope="col">First name</th>-->
-         <!--<th scope="col">Last name</th>-->
-         <!--<th scope="col">Age</th>-->
-         <!--<th scope="col">Login</th>-->
-         <!--<th scope="col">Password</th>-->
-         <!--<th scope="col">Block/Unblock</th>-->
-       <!--</tr>-->
-       <!--</thead>-->
-       <!--<tbody>-->
-       <!--<tr v-for="(user, index) in users" :key="index">-->
-         <!--<td class="m-t-10" @click="onClick">-->
-           <!--<div v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.id}}</div>-->
-           <!--<input class="form-control" v-else v-model="user.id" @keyup.enter="editItem(user, index)"/>-->
-         <!--</td>-->
+    <!--<table class="table table-dark m-t-10">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th scope="col">ID</th>-->
+    <!--<th scope="col">First name</th>-->
+    <!--<th scope="col">Last name</th>-->
+    <!--<th scope="col">Age</th>-->
+    <!--<th scope="col">Login</th>-->
+    <!--<th scope="col">Password</th>-->
+    <!--<th scope="col">Block/Unblock</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr v-for="(user, index) in users" :key="index">-->
+    <!--<td class="m-t-10" @click="onClick">-->
+    <!--<div v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.id}}</div>-->
+    <!--<input class="form-control" v-else v-model="user.id" @keyup.enter="editItem(user, index)"/>-->
+    <!--</td>-->
 
 
-         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.first_name}}</td>-->
-         <!--<input class="form-control" v-else v-model="user.first_name" @keyup.enter="editItem(user, index)"/>-->
+    <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.first_name}}</td>-->
+    <!--<input class="form-control" v-else v-model="user.first_name" @keyup.enter="editItem(user, index)"/>-->
 
-         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.last_name}}</td>-->
-         <!--<input class="form-control" v-else  v-model="user.last_name" @keyup.enter="editItem(user, index)"/>-->
+    <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.last_name}}</td>-->
+    <!--<input class="form-control" v-else  v-model="user.last_name" @keyup.enter="editItem(user, index)"/>-->
 
-         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.age}}</td>-->
-         <!--<input class="form-control" v-else v-model="user.age" @keyup.enter="editItem(user, index)"/>-->
+    <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.age}}</td>-->
+    <!--<input class="form-control" v-else v-model="user.age" @keyup.enter="editItem(user, index)"/>-->
 
-         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.login}}</td>-->
-         <!--<input class="form-control" v-else v-model="user.login" @keyup.enter="editItem(user, index)"/>-->
+    <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.login}}</td>-->
+    <!--<input class="form-control" v-else v-model="user.login" @keyup.enter="editItem(user, index)"/>-->
 
-         <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.password}}</td>-->
-         <!--<input class="form-control" v-else v-model="user.password" @keyup.enter="editItem(user, index)"/>-->
+    <!--<td class="m-t-10" v-if="!user.editing" @dblclick="user.editing = !user.editing">{{user.password}}</td>-->
+    <!--<input class="form-control" v-else v-model="user.password" @keyup.enter="editItem(user, index)"/>-->
 
-         <!--&lt;!&ndash;<td class="m-t-10">&ndash;&gt;-->
-           <!--&lt;!&ndash;<button @click="unblock" class="btn btn-info">Unblock editing</button>&ndash;&gt;-->
-           <!--&lt;!&ndash;<button @click="block(users)" class="btn btn-danger">Block editing</button>&ndash;&gt;-->
-         <!--&lt;!&ndash;</td>&ndash;&gt;-->
-       <!--</tr>-->
-       <!--</tbody>-->
-     <!--</table>-->
+    <!--&lt;!&ndash;<td class="m-t-10">&ndash;&gt;-->
+    <!--&lt;!&ndash;<button @click="unblock" class="btn btn-info">Unblock editing</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;<button @click="block(users)" class="btn btn-danger">Block editing</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;</td>&ndash;&gt;-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
 
-     <!--<p>{{newUsers.age}}</p>-->
+    <!--<p>{{newUsers.age}}</p>-->
 
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import Cookie from 'js.cookie'
+
   let ids = [101, 102, 430, 222, 332, 123, 211];
   let first_names = ['Vlad', 'Mikhail', 'Ruslan', 'Vitaliy', 'Oleg', 'Aleksander', 'Dmitriy'];
   let last_names = ['Borisov', 'Bond', 'Nikolaev', 'Smit', 'Robson', 'Anri', 'Statham'];
@@ -91,7 +95,17 @@
       }
     },
     methods: {
-      onClick(event){
+      logout() {
+        Cookie.remove('token')
+        this.$router.push('/login')
+        // this.$axios.get('logout')
+        //   .then((res) => {
+        //       console.log(res)
+        //
+        //     }
+        //   )
+      },
+      onClick(event) {
         event.preventDefault();
       },
       block(obj) {

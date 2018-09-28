@@ -6,7 +6,7 @@ import {router} from '@/router'
 let util = {}
 
 util.ajax = axios.create({
-  baseURL: 'http://24e8db81.ngrok.io/api/',
+  baseURL: 'http://f1b07f31.ngrok.io/api/',
 })
 
 util.ajax.interceptors.request.use(config => {

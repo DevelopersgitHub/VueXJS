@@ -1,6 +1,6 @@
 <template>
   <div class="users_table">
-    <table class="table table-dark animated bounceInLeft">
+    <table class="table table-dark animated bounceInLeft" v-if="users.length">
       <thead>
       <tr>
         <th scope="col">ID</th>
@@ -47,8 +47,12 @@
     <!--</b-modal>-->
     <!--</div>-->
     <!--</div>-->
+    <div v-else class="pacman mx-auto">
+      <Pacman :color="'#426084'"></Pacman>
+    </div>
     <router-view></router-view>
   </div>
+
 </template>
 
 <script>

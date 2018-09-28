@@ -14,16 +14,18 @@ export const router = new Router(RouterConfig)
 
 router.beforeEach((to, from, next) => {
   if (!Cookie.get('token')) {
-    if (to.name !== 'login') {
+    if (to.name !== 'Login') {
       next({
         name: 'Login'
       })
     } else {
-      next('gdgd')
+      next()
     }
   } else {
-    if (to.name === 'login') {
-      next()
+    if (to.name === 'Login') {
+      next({
+        name: 'Table'
+      })
     }
     else {
       next()

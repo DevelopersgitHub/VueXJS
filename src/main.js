@@ -7,10 +7,12 @@ import store from './store'
 import BootstrapVue from 'bootstrap-vue';
 import util from '@/components/login/settings'
 
+
+
 Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false;
-
+Vue.component('Pacman', () => import('vue-spinner/src/FadeLoader'))
 //
 // Vue.directive('text', {
 //     inserted: el => el.focus()
@@ -27,5 +29,5 @@ new Vue({
     util.checkUpdate()
   },
   components: {App},
-  template: '<App/>',
+  template: '<App/>'
 });

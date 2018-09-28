@@ -11,7 +11,7 @@ export const routes = [
   },
   {
     path: '/users_table',
-    name: 'User Table',
+    name: 'Table',
     component: () => import('../components/OldComponents/UsersTable')
   },
   {
@@ -28,5 +28,10 @@ export const routes = [
     path: '/403',
     name: 'Page 403',
     component: () => import('../components/login/Page403')
+  },
+  {
+    path: '/images',
+    name: 'Images',
+    component: () => import('../components/login/Images')
   }
 ];
